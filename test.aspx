@@ -3,12 +3,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <script type="text/javascript" src="../dhtmlx/dhtmlxKanban/dist/kanban.js"></script>
-    <link rel="stylesheet" href="../dhtmlx/dhtmlxKanban/dist/kanban.css"/>
-    <script src="https://snippet.dhtmlx.com/codebase/data/kanban/01/dataset.js"></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <link rel="stylesheet" href="../dhtmlx/dhtmlxKanban/dist/kanban.css"/>    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="../dhtmlx/dhtmlxKanban/dist/kanban.js"></script>
+    <script src="https://snippet.dhtmlx.com/codebase/data/kanban/01/dataset.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -16,7 +19,6 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script type="text/javascript"></script>
     <title>Kanban Board</title>
     <style>
         .html {
@@ -239,7 +241,7 @@
 
         .sub-label,
         .label {
-            width: 45%;
+            width: 48%;
         }
 
         .sub-label {
@@ -254,21 +256,17 @@
             font-weight: bold;
         }
 
-        .value {
-            flex: 1;
-            word-break: break-word;
+        .section .value {
             display: flex;
+            word-break: break-word;
             flex-wrap: wrap;
             gap: 5px;
             font-weight: bold;
+            width: 40%;
         }
 
         .date-value{
             margin-right: 10px;
-        }
-
-        .section .value {
-            font-weight: bold;
         }
 
         .selected {
@@ -478,11 +476,26 @@
         .dashboard-controls-right{
             margin-top:5px;
         }
+
+        @media only screen and (max-width: 1280px) {
+            .card-setup-container {
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+            }
+
+            .custom-modal {
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+            }
+        }
+
     </style>
     <script>
         const { Kanban, template } = kanban;
 
-        const users = [
+        const users = [ // TODO: delete if no use anymore
             { id: 1, label: "Steve Smith", avatar: "https://snippet.dhtmlx.com/codebase/data/kanban/01/img/user-1.jpg" },
             { id: 2, label: "Aaron Long", avatar: "https://snippet.dhtmlx.com/codebase/data/kanban/01/img/user-2.jpg" },
             { id: 3, label: "Angela Allen", avatar: "https://snippet.dhtmlx.com/codebase/data/kanban/01/img/user-3.jpg" },
@@ -513,167 +526,7 @@
             attached: false,
         };
 
-        const defaultColumns = [
-            { label: "Engagement letter created and mailed", id: "backlog" },
-            { label: "Engagement letter signed", id: "inprogress" },
-            { label: "Information received", id: "testing" },
-            { label: "Intake", id: "done" },
-            { label: "Document review", id: "Document review" },
-            { label: "Preparation", id: "Preparation" },
-        ];
-
-        const rows = [
-            { label: "Feature", id: "feature" },
-            { label: "Task", id: "task" },
-        ];
-
         const description = "1020 Income Tax Return/Simple";
-        const cards = [
-            {
-                id: 1,
-                label: "", // 13 Handles - Cash Management Study 2024 (249398)
-                priority: 1,
-                color: "#65D3B3",
-                start_date: new Date("01/07/2021"),
-                users: [3, 2],
-                column: "backlog",
-                type: "feature",
-                comments: [],
-                data: {
-                    ClientLongName: "Hunter",
-                    ClientShortName: "Nghiem",
-                    ClientCode: "S001",
-                    ProjectDescription: "WSG",
-                    ProjectCode: "WSG-001",
-                    Description: "1020 Income Tax Return/ Simple",
-                    Priority: "Medium",
-                    DueDate: "01/07/2021",
-                    TargetDate: "02/07/2021",
-                    TemplateDescription: "Income Tax return",
-                    TaxType: "Tax type",
-                    Difficulty: "Difficulty",
-                    Industry: "Industry",
-                    ForeignConsent: "No",
-                    Status: "Completed",
-                    AssignedTo: "",
-                    ProductivityRate: "",
-                    ScheduledStartDate: "01/01/2024",
-                    ScheduledEndDate: "30/01/2024",
-                    ScheduledHoursStandard: "",
-                    ScheduledHoursAssigned: "",
-                    ActualStartDate: "02/01/2024",
-                    ActualEndDate: "25/01/2024"
-                }
-            },
-            {
-                id: 2,
-                label: "", // 14 Handles - Cash Management Study 2024 (249398)
-                priority: 2,
-                color: "#FFC975",
-                start_date: new Date("01/07/2021"),
-                users: [3, 2],
-                column: "inprogress",
-                type: "feature",
-                comments: [],
-                data: {
-                    ClientLongName: "Nick",
-                    ClientShortName: "Ta",
-                    ClientCode: "J002",
-                    ProjectDescription: "WSG",
-                    ProjectCode: "WSG-001",
-                    Description: "1020 Income Tax Return/ Simple",
-                    Priority: "Medium",
-                    DueDate: "01/07/2021",
-                    TargetDate: "02/07/2021",
-                    TemplateDescription: "Income Tax return",
-                    TaxType: "Tax type",
-                    Difficulty: "Difficulty",
-                    Industry: "Industry",
-                    ForeignConsent: "No",
-                    Status: "Completed",
-                    AssignedTo: "",
-                    ProductivityRate: "",
-                    ScheduledStartDate: "01/01/2024",
-                    ScheduledEndDate: "30/01/2024",
-                    ScheduledHoursStandard: "",
-                    ScheduledHoursAssigned: "",
-                    ActualStartDate: "02/01/2024",
-                    ActualEndDate: "25/01/2024"
-                }
-            },
-            {
-                id: 3,
-                label: "", // 15 Handles - Cash Management Study 2024 (249398)
-                priority: 3,
-                color: "#FF5252",
-                start_date: new Date("01/07/2021"),
-                users: [3, 2],
-                column: "testing",
-                type: "feature",
-                comments: [],
-                data: {
-                    ClientLongName: "Koala",
-                    ClientShortName: "Huynh",
-                    ClientCode: "D003",
-                    ProjectDescription: "WSG",
-                    ProjectCode: "WSG-001",
-                    Description: "1020 Income Tax Return/ Simple",
-                    Priority: "Medium",
-                    DueDate: "01/07/2021",
-                    TargetDate: "02/07/2021",
-                    TemplateDescription: "Income Tax return",
-                    TaxType: "Tax type",
-                    Difficulty: "Difficulty",
-                    Industry: "Industry",
-                    ForeignConsent: "No",
-                    Status: "Completed",
-                    AssignedTo: "",
-                    ProductivityRate: "",
-                    ScheduledStartDate: "01/01/2024",
-                    ScheduledEndDate: "30/01/2024",
-                    ScheduledHoursStandard: "",
-                    ScheduledHoursAssigned: "",
-                    ActualStartDate: "02/01/2024",
-                    ActualEndDate: "25/01/2024"
-                }
-            },
-            {
-                id: 4,
-                label: "", // 16 Handles - Cash Management Study 2024 (249398)
-                priority: 1,
-                color: "#65D3B3",
-                start_date: new Date("01/07/2021"),
-                users: [3, 2],
-                column: "done",
-                type: "feature",
-                comments: [],
-                data: {
-                    ClientLongName: "Saka",
-                    ClientShortName: "Tran",
-                    ClientCode: "S004",
-                    ProjectDescription: "WSG",
-                    ProjectCode: "WSG-001",
-                    Description: "1020 Income Tax Return/ Simple",
-                    Priority: "Medium",
-                    DueDate: "01/07/2021",
-                    TargetDate: "02/07/2021",
-                    TemplateDescription: "Income Tax return",
-                    TaxType: "Tax type",
-                    Difficulty: "Difficulty",
-                    Industry: "Industry",
-                    ForeignConsent: "No",
-                    Status: "Completed",
-                    AssignedTo: "",
-                    ProductivityRate: "",
-                    ScheduledStartDate: "01/01/2024",
-                    ScheduledEndDate: "30/01/2024",
-                    ScheduledHoursStandard: "",
-                    ScheduledHoursAssigned: "",
-                    ActualStartDate: "02/01/2024",
-                    ActualEndDate: "25/01/2024"
-                }
-            },
-        ];
 
         var formatNameObj = {};
         var statuses = [];
@@ -696,18 +549,107 @@
 
         var workflowId = getParamValue("workflowId") ?? 0;
 
+        // This enum is for due date dropdown selection
+        var DueDateSelection = {
+            SpecifyDateRange: 0,
+            StartDateOnly: 1,
+            EndDateOnly: 2
+        }
+
+        // This object is for user selection and input
+        var dueDateOptions = {
+            DueDateSelection: DueDateSelection.SpecifyDateRange,
+            StartDate: 0,
+            EndDate: 0
+        };
+
+        var TargetDateSelection = {
+            OriginalDateRange: 0,
+            CurrentDateRange: 1,
+            NumberOfDaysDifference: 2
+        }
+        var targetDateOptions = {
+            TargetDateSelection:  TargetDateSelection.OriginalDateRange,
+            StartDate: 0,
+            EndDate: 0
+        };
+
+        var listProject = [];
+        var listWorkflowTemplateFilter = [];
+        var listTaxReturnType = [];
+        var listDifficulty = [];
+        var listTeam = [];
+        var listPortfolio = [];
+        var portfolioSaved = [];
+        var workflowData = [];
+
         function pageLoad() {
             loadData();
         }
 
-        function renderKanbanBoard(columns = kanbanColumns, isUpdatedBoard = false) {
+        // render Kanban board UI
+        function renderKanbanBoard(columns = kanbanColumns, isUpdatedBoard = false, data = workflowData ?? cards) {
             // destructor() is remove all Kanban board config in UI
-            //if (isUpdatedBoard) kanbanBoard.destructor();
-            console.log("isrender");
-            console.log(columns);
+
+            if (isUpdatedBoard) kanbanBoard.destructor();
+
+            // card info: data, column, row
+            var cardData = [];
+            var cardColumns = [];
+            var cardRows = [];
+            // total column labels to process below
+            var totalColumns = columns.length ? [...columns.map(item => item.label)] : [];
+            // total rows - swimlanes (workflow name)
+            var totalRows = [];
+
+            data.forEach((item, index) => {
+                // columns
+                totalColumns.push(item.WorkStepDescription ?? "");
+                totalRows.push(`${item.WorkflowId}-${item.Description ?? ""}`);
+                
+                // card data
+                var card = {
+                    id: index + 1,
+                    label: "",
+                    priority: item.Priority,
+                    color: "#65D3B3",
+                    start_date: new Date("01/07/2021"),
+                    users: [3, 2],
+                    column: item.WorkStepDescription.replaceAll(" ", ""),
+                    type: item.WorkflowId,
+                    comments: [],
+                    data: item
+                };
+                cardData.push(card);
+            });
+
+            // should not duplicate column
+            totalColumns = [...new Set(totalColumns)];
+            totalColumns.forEach(column => {
+                var columnItem = {
+                    id: column.replaceAll(" ", ""),
+                    label: column,
+                };
+
+                cardColumns.push(columnItem);
+            });
+
+            totalRows = [...new Set(totalRows)];
+            totalRows.forEach(row => {
+                // ex: row is {id}-{description}
+                var separateArr = row.split("-");
+                var rowItem = {
+                    id: separateArr[0],
+                    label: separateArr.length > 1 ? separateArr[1] : ""
+                };
+                cardRows.push(rowItem);
+            });
+
+            // init kanban board
             kanbanBoard = new Kanban("#root", {
-                columns,
-                cards,
+                columns: cardColumns,
+                rows: cardRows,
+                cards: cardData,
                 cardTemplate: template(card => cardTemplate(card)),
                 cardShape,
                 readonly: {
@@ -715,17 +657,30 @@
                     add: false, 
                     select: true, 
                     dnd: true 
-                }
+                },
+                editorShape: [],
+                rowKey: "type" // config get which card field to be row key
+            });
+
+            // set value for global variable
+            kanbanColumns = cardColumns;
+
+            // should disabled opening editor in right side
+            kanbanBoard.api.intercept("select-card", function(id, item) {
+                // prevent the editor shape from opening
+                return false;
             });
 
             kanbanBoard.api.on("move-column", (obj) => {
                 var columnOrder = JSON.stringify(kanbanBoard.api.getState().columns);
-                console.log(columnOrder);
+
                 ajaxPost("SaveColumnOrder", { columnOrder, workflowId}, ajaxResultChecker(() => {}));
             });
         }
 
         function escapeHTML(str) {
+            if (!str || !str?.length) return "";
+
             return str.replace(/[&<>'"]/g, tag => ({
                 "&": "&amp;",
                 "<": "&lt;",
@@ -735,6 +690,7 @@
             }[tag] || tag));
         }
 
+        // render custom content for card
         function cardTemplate({ cardFields, selected }) {
             const { label, color } = cardFields;
 
@@ -754,11 +710,20 @@
             }).join('');
 
             // apply formatNameObj to card label
-            var cardLabel = formatNameObj.formatString;
-            formatNameObj.nameFormat.forEach(item => {
-                if (item.checked) {
-                    var value = cardFields.data[item.field];
-                    cardLabel = cardLabel.replace(item.order, value);
+            // ex: 1\4 (5) 2
+            // split("") will separate all character in string
+            var separateArr = formatNameObj.formatString.split("");
+            var numberRegex = /\d/g;
+            var cardLabel = "";
+            separateArr.forEach(element => {
+                if (!numberRegex.test(element)) {
+                    cardLabel += element;
+                    return;
+                }
+
+                var targetItem = formatNameObj.nameFormat.find(item => item.order.toString() === element && item.checked);
+                if (targetItem) {
+                    cardLabel += cardFields.data[targetItem.field];
                 }
             });
 
@@ -829,23 +794,35 @@
             return field?.checked ?? false;
         }
 
-        // TODO: load init data
+        // load init data
         function loadData() {
             ajaxPost("GetColumnOrder", workflowId, ajaxResultChecker((result) => {
-                kanbanColumns = result ? JSON.parse(result) : defaultColumns;
+                kanbanColumns = result ? JSON.parse(result) : [];
                 getViewSetup(() => {
-                    generateCardSetup(fieldSelections, () => renderKanbanBoard());
+                    generateCardSetup(fieldSelections, () => {
+                        getListPortfolio(() => {
+                            getListProject(() => {
+                                getWorkflowTemplateForFilter(() => {
+                                    getListDifficulty(() => {
+                                        getTaxReturnTypeForFilter(() => {
+                                            getWorkflowData(() => renderKanbanBoard());
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
                     generateClientProjDescCustom();
                 });
             }));
         }
         
-        // render card setup item modal
+        // render card setup modal
         function generateCardSetup(data = fieldSelections, callback) {
             Promise.all([
                 createNestedSortablesDefault(data, $("#fieldSelection"))
             ]).then(() => {
-                // TODO: checked or indeterminate follow fieldSelections
+                // checked or indeterminate follow fieldSelections
                 var dataWithoutChildren = getObjectsWithoutChildren(data);
                 dataWithoutChildren.forEach(item => {
                     var checkboxElement = $(`input[type=checkbox]#${item.field}`, "#fieldSelection");
@@ -968,38 +945,17 @@
             }));
         }
 
+        // default client\project description custom data
         function createDefaultFormat() {
             var nameFormat = [
-                {
-                    "headerName": "Client Long Name",
-                    "field": "ClientLongName",
-                    "checked": true,
-                    "order": 1
-                },
-                {
-                    "headerName": "Client Short Name",
-                    "field": "ClientShortName",
-                    "checked": false,
-                    "order": 2
-                },
-                {
-                    "headerName": "Client Code",
-                    "field": "ClientCode",
-                    "checked": false,
-                    "order": 3
-                }, 
-                {
-                    "headerName": "Project Description",
-                    "field": "ProjectDescription",
-                    "checked": true,
-                    "order": 4
-                },
-                {
-                    "headerName": "Project Code",
-                    "field": "ProjectCode",
-                    "checked": true,
-                    "order": 5
-                }
+
+
+                { "headerName": "Client Long Name", "field": "ClientLongName", "checked": true, "order": 1 },
+                { "headerName": "Client Short Name", "field": "ClientShortName", "checked": false, "order": 2 },
+                { "headerName": "Client Code", "field": "ClientCode", "checked": false, "order": 3 },
+                { "headerName": "Project Description", "field": "ProjectName", "checked": true, "order": 4 },
+                { "headerName": "Project Code", "field": "ProjectCode", "checked": true, "order": 5 }
+
             ]
             var formatString = "1\\4 (5)";
 
@@ -1008,31 +964,12 @@
 
         function createDefaultStatus() {
             return [
-                {
-                    "name": "Active",
-                    "id": statusIds.Active,
-                    "checked": true,
-                },
-                {
-                    "name": "Completed",
-                    "id": statusIds.Complete,
-                    "checked": true,
-                },
-                {
-                    "name": "Pending",
-                    "id": statusIds.Pending,
-                    "checked": true,
-                },
-                {
-                    "name": "Cancelled",
-                    "id": statusIds.Canceled,
-                    "checked": true,
-                },
-                {
-                    "name": "Suspended",
-                    "id": statusIds.Suspended,
-                    "checked": true,
-                },
+
+                { "name": "Active", "id": statusIds.Active, "checked": true, },
+                { "name": "Complete", "id": statusIds.Complete, "checked": true, },
+                { "name": "Pending", "id": statusIds.Pending, "checked": true, },
+                { "name": "Canceled", "id": statusIds.Canceled, "checked": true, },
+                { "name": "Suspended", "id": statusIds.Suspended, "checked": true,},
             ]
         }
         
@@ -1049,10 +986,7 @@
             }
         }
 
-        /// <summary>
-        /// Get the desired parameter value from parameters passed to page.
-        /// </summary>
-        /// <returns></returns>
+        // Get the desired parameter value from parameters passed to page.
         function getParamValue(paramName) {
             var url = window.location.search.substring(1); //get rid of "?" in query string
             var qArray = url.split('&'); //get key-value pairs
@@ -1158,7 +1092,7 @@
             onChangeCustomInput();
         }
 
-        function onChangeCustomInput(arr = formatNameObj.nameFormat) {
+        function onChangeCustomInput(arr = [...formatNameObj.nameFormat]) {
             var inputValue = $("#customInput").val();
             var sanitizedValue = inputValue.replace(/[^\d\W]+/g, '');
             $("#customInput").val(sanitizedValue);
@@ -1172,7 +1106,6 @@
 
             sortedArray = sortedArray.sort((a, b) => a - b);
             arr.forEach(element => {
-                element.checked = false
                 $(`.custom-container__line input[name=${element?.field}]`).prop("checked", false);
             });
         
@@ -1184,7 +1117,6 @@
 
                 if (selection) {
                     $(`.custom-container__line input[id=${selection?.field}]`).prop("checked", true);
-                    selection.checked = true;
                 }
             }
 
@@ -1283,6 +1215,141 @@
                 saveStatusSetup(statuses); 
             });
         })
+
+        function getWorkflowData(callback) {
+            var requestParams = createGetWorkflowDataRequest();
+            ajaxPost("GetWorkflowData", requestParams, 
+                ajaxResultChecker((res) => {
+                    workflowData = res ?? [];
+                    if (callback) callback();
+                }));
+        }
+
+        // TODO: apply filter request param later in here
+        function createGetWorkflowDataRequest() {
+            // If every item of the list is checked, make it empty and pass 0 to stored procedure. It won't insert all element into the table (increase performance)
+            var listIdProject = listProject.every(element => element.Check === true) ? [] : listProject.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+            var listIdWorkflowTemplate = listWorkflowTemplateFilter.every(element => element.Check === true) ? [] : listWorkflowTemplateFilter.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+            var listIdTaxReturnType = listTaxReturnType.every(element => element.Check === true) ? [] : listTaxReturnType.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+            var listIdDifficulty = listDifficulty.every(element => element.Check === true) ? [] : listDifficulty.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+            var optionPriority = getPriorityDefaultValue();
+            var listWorkflowStatus = getWorkflowStatus();
+            var listWorkStepStatus = getWorkflowStatus();
+            var listIdPriority = optionPriority.every(element => element.Check === true) ? [] : optionPriority.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+            var listIdWorkflowStatus = listWorkflowStatus.every(element => element.Check === true) ? [] : listWorkflowStatus.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+            var listIdWorkstepStatus = listWorkStepStatus.every(element => element.Check === true) ? [] : listWorkStepStatus.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+
+            return {
+                listProject: JSON.stringify(listIdProject),
+                listWorkflowTemplate: JSON.stringify(listIdWorkflowTemplate),
+                listTaxReturnType: JSON.stringify(listIdTaxReturnType),
+                dueDate: JSON.stringify({
+                    StartDate: dueDateOptions.StartDate,
+                    EndDate: dueDateOptions.EndDate
+                }),
+                difficulty: JSON.stringify(listIdDifficulty),
+                priority: JSON.stringify(listIdPriority),
+                targetDate: JSON.stringify(targetDateOptions),
+                workflowStatus: JSON.stringify(listIdWorkflowStatus), // no need
+                workstepDescription: $("#searchWorkStepInput")?.val() ?? "", // TODO: get id of input in UI
+                workstepStatus: JSON.stringify(listIdWorkstepStatus),
+                teamAssigned: listTeam.find(value => value.Check)?.Id.toString() || "",
+                isUncheckAllPortfolio: false,//listPortfolio.every(value => value.Check === false),
+                isUncheckAllProject: false,//listProject.every(value => value.Check === false),
+                isUncheckAllTemplate: false//listWorkflowTemplateFilter.every(value => value.Check === false)
+            }
+        }
+
+        function getListProject(callback) {
+            ajaxPost("GetListProject", {},
+                ajaxResultChecker((results) => {
+                    listProject = results
+                    listProject = listProject.map(value => {
+                        value.Check = false;
+                        return value;
+                    });
+
+                    if (callback) callback();
+                }
+            ));
+        }
+
+        function getWorkflowTemplateForFilter(callback) {
+            ajaxPost("GetWorkflowTemplateForFilter", {},
+                ajaxResultChecker((results) => {
+                    listWorkflowTemplateFilter = results
+                    listWorkflowTemplateFilter = listWorkflowTemplateFilter.map(value => {
+                        value.Check = false;
+                        return value;
+                    });
+
+                    if (callback) callback();
+                }
+            ));
+        }
+
+        function getListDifficulty(callback) {
+            ajaxPost("GetListOfDifficulty", {},
+                ajaxResultChecker((results) => {
+                    listDifficulty = results
+                    listDifficulty = listDifficulty.map(value => {
+                        value.Check = true;
+                        return value;
+                    });
+                    
+                    if (callback) callback();
+                }
+            ));
+        }
+
+        function getTaxReturnTypeForFilter(callback) {
+            ajaxPost("GetTaxReturnTypeForFilter", {},
+                ajaxResultChecker((results) => {
+                    if (results?.length){
+                        listTaxReturnType = results;
+                        listTaxReturnType = listTaxReturnType.map(value => {
+                            value.Check = false;
+                            return value;
+                        });
+                    }
+
+                    if (callback) callback();
+                }
+            ));
+        }
+
+        function getPriorityDefaultValue() {
+            return [
+                { Name: "High", Id: 1, Check : true },
+                { Name: "Medium", Id: 2, Check : true },
+                { Name: "Low", Id: 3, Check : true }
+            ];
+        }
+
+        function getWorkflowStatus() {
+            return [
+                { Name: "Canceled", Id: 8, Check : true },
+                { Name: "Suspended", Id: 22, Check : true },
+                { Name: "Pending", Id: 24, Check : true },
+                { Name: "Active", Id: 1, Check : true },
+                { Name: "Completed", Id: 23, Check : true },
+            ];
+        }
+
+        function getListPortfolio(callback) {
+            ajaxPost("GetListPortfolio", {},
+                ajaxResultChecker((results) => 
+                {
+                    listPortfolio = results
+                    listPortfolio = listPortfolio.map(value => {
+                        value.Check = !portfolioSaved.length ? false : !!portfolioSaved.find(portfolio => portfolio.Id == value.Id);
+                        return value;
+                    });
+                    
+                    if (callback) callback();
+                }
+            ));
+        }
     </script>
 </head>
 <body onload="Javascript:pageLoad();">
@@ -1292,10 +1359,9 @@
        
         <div class="dashboard">
             <div class="dashboard-header">
-                <h2 style="color: #4A4A4A; font-weight: bold;">Activities</h2>
-                <button style="background-color: white; border: none; width: 40px; height: 40px;">
-                    <i
-                        class="fas fa-th"></i>
+                <h2 style="color:#4A4A4A; font-weight: bold;">Activities</h2>
+                <button style="background-color: white; border:none; width: 40px;height: 40px;">
+                    <i class="fas fa-th"></i>
                 </button>
             </div>
             <div class="dashboard-controls">
