@@ -21,6 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <title>Kanban Board</title>
     <style>
+        
         .html {
             font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
         }
@@ -1491,6 +1492,7 @@
         <div class="div"> lalaland1</div>
         <div class="div"> lalaland2</div>
     </div>
+    <!-- modify 3 -->
       
 </body>
 </html>
