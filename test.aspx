@@ -601,21 +601,21 @@
         }
 
         i.fas.fa-chevron-down {
-            font-size: 12px;
+        font-size: 12px;
         }
 
         .dashboard-controls-left > *,
         .dashboard-header > button{
-            border: 1px solid #CED4D9 !important;
-            border-radius: 3px;
+        border: 1px solid #CED4D9 !important;
+        border-radius: 3px;
         }
 
         .dashboard-controls-left button {
-            background-color: #fff;
+        background-color: #fff;
         }
 
         hr {
-            margin: 22px 12px 10px 12px;
+        margin: 22px 12px 10px 12px;
         }
 
         .btn btn-light dropdown-toggle{
@@ -623,30 +623,29 @@
         }
 
         .label-button {
-            width: 75px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #fff;
-            border-radius: 5px;
+        width: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 5px;
         }
 
         .wx-material-theme {
-            --wx-color-font: #000;
-            --wx-kanban-background: #EFEFEF !important;
+         --wx-color-font: #000;
+        --wx-kanban-background: #EFEFEF !important;
             font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
         }
 
         button#projectSearchMenuButton {
-            padding-right: 5px;
+        padding-right: 5px;
         }
 
         i.fas.fa-chevron-down {
-            padding-left: 5px;
+        padding-left: 5px;
         }
-
         .wx-label-line.svelte-30nbk4 {
-            margin: 6px 12px 4px 12px !important;
+        margin: 6px 12px 4px 12px !important;
         }
     </style>
     <script>
@@ -756,7 +755,7 @@
             NumberOfDaysDifference: 2
         }
         var targetDateOptions = {
-            TargetDateSelection:  TargetDateSelection.OriginalDateRange,
+            TargetDateSelection: TargetDateSelection.OriginalDateRange,
             StartDate: 0,
             EndDate: 0
         };
@@ -822,7 +821,7 @@
                 // columns
                 totalColumns.push(item.WorkStepDescription ?? "");
                 totalRows.push(`${item.WorkflowId}-${item.Description ?? ""}`);
-                
+
                 // card data
                 var card = {
                     id: index + 1,
@@ -872,9 +871,9 @@
                 cardTemplate: template(card => cardTemplate(card)), // render content card
                 cardShape,
                 readonly: {
-                    edit: true, 
-                    add: false, 
-                    select: false, 
+                    edit: true,
+                    add: false,
+                    select: false,
                     dnd: false // prevent user drag card
                 },
                 editorShape: [],
@@ -887,14 +886,14 @@
             kanbanColumns = cardColumns;
 
             // should disabled opening editor in right side
-            kanbanBoard.api.intercept("select-card", function(id, item) {
+            kanbanBoard.api.intercept("select-card", function (id, item) {
                 // prevent the editor shape from opening
                 return false;
             });
 
             kanbanBoard.api.on("move-column", (obj) => {
                 var columnOrder = JSON.stringify(kanbanBoard.api.getState().columns);
-                ajaxPost("SaveColumnOrder",  columnOrder, ajaxResultChecker(() => {}));
+                ajaxPost("SaveColumnOrder", columnOrder, ajaxResultChecker(() => { }));
             });
         }
 
@@ -964,7 +963,7 @@
                             <div class="section">
                                 <div>${item.headerName}</div>
                             </div>` : ""}`;
-                        
+
                         item.children.forEach(childItem => {
                             cardHtml += `${(isShowTargetField(childItem)) ? `<div class="section">
                                     <span class="sub-label">${childItem.headerName}</span>
@@ -1025,9 +1024,12 @@
                 });
             }));
         }
-        
+
         // render card setup modal
         function generateCardSetup(data = fieldSelections, callback) {
+            console.log("generateCardSetup");
+            console.log(fieldSelections);
+            console.log(callback);
             Promise.all([
                 createNestedSortablesDefault(data, $("#fieldSelection"))
             ]).then(() => {
@@ -1082,6 +1084,7 @@
 
         function saveCardSetup(fieldSelection, callback) {
             var fieldSelectionString = JSON.stringify(fieldSelection);
+            console.log("fii");
 
             ajaxPost("SaveCardSetup", fieldSelectionString, ajaxResultChecker((result) => {
                 if (result) {
@@ -1192,10 +1195,10 @@
                 { "name": "Completed", "id": statusIds.Completed, "checked": true, },
                 { "name": "Pending", "id": statusIds.Pending, "checked": true, },
                 { "name": "Cancelled", "id": statusIds.Cancelled, "checked": true, },
-                { "name": "Suspended", "id": statusIds.Suspended, "checked": true,},
+                { "name": "Suspended", "id": statusIds.Suspended, "checked": true, },
             ]
         }
-        
+
         function onClickCustomFieldNameSetting() {
             toggleCustomModal(false, true);
         }
@@ -1219,39 +1222,41 @@
                     return pArr[1].replaceAll('%27', '').replaceAll('_', ' '); //return value
             }
         }
-
+        var oldSelections = [];
         function onClickCardSetupBtn() {
             toggleCardSetupModal(false, true);
+            //oldSelections = arr.map(item => ({
+            //    field: item.field,
+            //    checked: item.checked
+            //}));
+            oldSelections = JSON.parse(JSON.stringify(fieldSelections)); // Sao lưu trạng thái hiện tại
+            console.log("oldSelections");
+            console.log(oldSelections);
         }
 
         function toggleCardSetupModal(isShow = false, isClickBtn = false) {
             var cardSetupModal = $("#cardSetup");
             if (isClickBtn) {
                 cardSetupModal.toggle();
-                //originalFieldSelections = getAllOrSelectedItemsFromCardSetup(true);
-                //console.log("originalFieldSelections");
-                //console.log(originalFieldSelections);
             } else {
                 cardSetupModal.toggle(isShow);
             }
         }
 
         function onClickCancelCardSetup() {
-          //console.log("onlclickoriginalFieldSelections");
-          //  console.log(originalFieldSelections);
-          //  fieldSelections = originalFieldSelections;
-          //  formatNameObj = JSON.parse(JSON.stringify(originalFormatNameObj));
-          //  saveCardSetup(fieldSelections, () => {
-          //      toggleCardSetupModal();
-          //      renderKanbanBoard(kanbanColumns, true); 
-          //      getViewSetup(() => {
-          //          toggleCardSetupModal(false);
-          //  });
-          
-          
-
+            console.log("incancel");
+            fieldSelections = JSON.parse(JSON.stringify(oldSelections)); // Khôi phục lại trạng thái ban đầu
+            console.log("oldSelections");
+            console.log(fieldSelections);
+            fieldSelections.forEach(item => {
+                var checkboxElement = $(`input[type=checkbox]#${item.field}`, "#fieldSelection");
+                checkboxElement?.prop("checked", item.checked).trigger("change");
+            });
+            getViewSetup(() => {
+                toggleCardSetupModal(false);
+            });
         }
-        
+
         function onClickApplyCardSetup() {
             fieldSelections = getAllOrSelectedItemsFromCardSetup(true);
             saveCardSetup(fieldSelections, () => {
@@ -1267,7 +1272,7 @@
                 item.checked = isChecked;
             });
             formatNameObj.formatString = $("#customInput").val();
-            
+
             // If user do not input the format or clear the input, let everything return to default 
             if (formatNameObj.nameFormat.every(item => item.checked === false) || formatNameObj.formatString === "") {
                 formatNameObj = createDefaultFormat();
@@ -1294,7 +1299,7 @@
             var targetOption = formatNameObj.nameFormat.find(item => item.field === field);
             if (targetOption) {
                 var checked = $(`input[id=${field}]`, "#customCheckboxContainer").is(":checked");
-                optionSelected = {...targetOption, checked: checked};
+                optionSelected = { ...targetOption, checked: checked };
             }
 
             updateValueInputFormatName(optionSelected);
@@ -1304,12 +1309,12 @@
             var input = $("#customInput")
             var detached = input.val().split("");
 
-            if (optionSelected.checked){
-                if (!detached.includes(optionSelected.order.toString())){
+            if (optionSelected.checked) {
+                if (!detached.includes(optionSelected.order.toString())) {
                     detached.push(optionSelected.order.toString())
                 }
             } else {
-                if (detached.includes(optionSelected.order.toString())){
+                if (detached.includes(optionSelected.order.toString())) {
                     detached = detached.filter(char => char !== optionSelected.order.toString());
                 }
             }
@@ -1330,11 +1335,12 @@
                 inputValue = inputValue.replace(event.key, "");
                 input.val(inputValue)
             }
-            
+
             onChangeCustomInput();
         }
 
         function onChangeCustomInput(arr = [...formatNameObj.nameFormat]) {
+            console.log("xxx");
             var inputValue = $("#customInput").val();
             var sanitizedValue = inputValue.replace(/[^\d\W]+/g, '');
             $("#customInput").val(sanitizedValue);
@@ -1347,12 +1353,14 @@
             });
 
             sortedArray = sortedArray.sort((a, b) => a - b);
+            console("show arr");
+            console.log(arr);
             arr.forEach(element => {
                 $(`.custom-container__line input[name=${element?.field}]`).prop("checked", false);
             });
-        
-            var notSelectedItem = [...arr]
 
+            var notSelectedItem = [...arr]
+            
             for (var index = 0; index < sortedArray.length; index++) {
                 var selection = arr.find(value => value.order.toString() === sortedArray[index][0]);
                 notSelectedItem = notSelectedItem.filter(value => value.order.toString() !== sortedArray[index].toString());
@@ -1362,14 +1370,14 @@
                 }
             }
 
-            notSelectedItem.forEach(value=> {
+            notSelectedItem.forEach(value => {
                 $(`.sortable-item input[name=${value?.field}]`).prop("checked", false);
             })
         }
 
         function getWorkflowData(callback) {
             var requestParams = createGetWorkflowDataRequest();
-            ajaxPost("GetWorkflowData", requestParams, 
+            ajaxPost("GetWorkflowData", requestParams,
                 ajaxResultChecker((res) => {
                     workflowData = res ?? [];
                     if (callback) callback();
@@ -1381,15 +1389,15 @@
             // If every item of the list is checked, make it empty and pass 0 to stored procedure. It won't insert all element into the table (increase performance)
             var isAllProjects = selectedProject.Id === "allProject" || selectedPortfolio.Id === "allPortfolio";
             var listIdProject = (isAllProjects) ? [] : [{ Id: selectedProject.Id }, ...selectedPortfolioProjectIds];
-            var listIdWorkflowTemplate = listWorkflowTemplateFilter.every(element => element.Check === true) ? [] : listWorkflowTemplateFilter.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
-            var listIdTaxReturnType = listTaxReturnType.every(element => element.Check === true) ? [] : listTaxReturnType.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
-            var listIdDifficulty = listDifficulty.every(element => element.Check === true) ? [] : listDifficulty.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+            var listIdWorkflowTemplate = listWorkflowTemplateFilter.every(element => element.Check === true) ? [] : listWorkflowTemplateFilter.filter((element) => element.Check === true).map((element) => ({ Id: element.Id }));
+            var listIdTaxReturnType = listTaxReturnType.every(element => element.Check === true) ? [] : listTaxReturnType.filter((element) => element.Check === true).map((element) => ({ Id: element.Id }));
+            var listIdDifficulty = listDifficulty.every(element => element.Check === true) ? [] : listDifficulty.filter((element) => element.Check === true).map((element) => ({ Id: element.Id }));
             var optionPriority = getPriorityDefaultValue();
             var listWorkflowStatus = getWorkflowStatus();
             var listWorkStepStatus = getWsStatusRequest();
-            var listIdPriority = optionPriority.every(element => element.Check === true) ? [] : optionPriority.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
-            var listIdWorkflowStatus = listWorkflowStatus.every(element => element.Check === true) ? [] : listWorkflowStatus.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
-            var listIdWorkStepStatus = listWorkStepStatus.every(element => element.Check === true) ? [] : listWorkStepStatus.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+            var listIdPriority = optionPriority.every(element => element.Check === true) ? [] : optionPriority.filter((element) => element.Check === true).map((element) => ({ Id: element.Id }));
+            var listIdWorkflowStatus = listWorkflowStatus.every(element => element.Check === true) ? [] : listWorkflowStatus.filter((element) => element.Check === true).map((element) => ({ Id: element.Id }));
+            var listIdWorkStepStatus = listWorkStepStatus.every(element => element.Check === true) ? [] : listWorkStepStatus.filter((element) => element.Check === true).map((element) => ({ Id: element.Id }));
 
             return {
                 listProject: JSON.stringify(listIdProject),
@@ -1422,7 +1430,7 @@
 
                     if (callback) callback();
                 }
-            ));
+                ));
         }
 
         function generateListProjectFilter(searchString = "", data = listProject) {
@@ -1432,8 +1440,8 @@
             prjFilterMenu.empty();
             prjFilterMenu.append(
                 `<div>` +
-                    `<input type="radio" name="project-name" style="margin-right: 10px; cursor: pointer;" id="allProject" onClick="selectProjectOption('allProject')">` +
-                    `<label for="allProject" style="cursor: pointer;">All</label>` +
+                `<input type="radio" name="project-name" style="margin-right: 10px; cursor: pointer;" id="allProject" onClick="selectProjectOption('allProject')">` +
+                `<label for="allProject" style="cursor: pointer;">All</label>` +
                 "</div>"
             )
 
@@ -1480,7 +1488,7 @@
         function searchProject() {
             if (timer) clearTimeout(timer);
 
-            timer = setTimeout(function() {
+            timer = setTimeout(function () {
                 var searchValue = $('#searchProjectInput').val();
                 generateListProjectFilter(searchValue, listProject);
             }, 500);
@@ -1497,7 +1505,7 @@
 
                     if (callback) callback();
                 }
-            ));
+                ));
         }
 
         function getListDifficulty(callback) {
@@ -1508,16 +1516,16 @@
                         value.Check = true;
                         return value;
                     });
-                    
+
                     if (callback) callback();
                 }
-            ));
+                ));
         }
 
         function getTaxReturnTypeForFilter(callback) {
             ajaxPost("GetTaxReturnTypeForFilter", {},
                 ajaxResultChecker((results) => {
-                    if (results?.length){
+                    if (results?.length) {
                         listTaxReturnType = results;
                         listTaxReturnType = listTaxReturnType.map(value => {
                             value.Check = false;
@@ -1527,24 +1535,24 @@
 
                     if (callback) callback();
                 }
-            ));
+                ));
         }
 
         function getPriorityDefaultValue() {
             return [
-                { Name: "High", Id: 1, Check : true },
-                { Name: "Medium", Id: 2, Check : true },
-                { Name: "Low", Id: 3, Check : true }
+                { Name: "High", Id: 1, Check: true },
+                { Name: "Medium", Id: 2, Check: true },
+                { Name: "Low", Id: 3, Check: true }
             ];
         }
 
         function getWorkflowStatus() {
             return [
-                { Name: "Canceled", Id: 8, Check : true },
-                { Name: "Suspended", Id: 22, Check : true },
-                { Name: "Pending", Id: 24, Check : true },
-                { Name: "Active", Id: 1, Check : true },
-                { Name: "Completed", Id: 23, Check : true },
+                { Name: "Canceled", Id: 8, Check: true },
+                { Name: "Suspended", Id: 22, Check: true },
+                { Name: "Pending", Id: 24, Check: true },
+                { Name: "Active", Id: 1, Check: true },
+                { Name: "Completed", Id: 23, Check: true },
             ];
         }
 
@@ -1560,21 +1568,20 @@
 
         function getListPortfolio(callback) {
             ajaxPost("GetListPortfolio", {},
-                ajaxResultChecker((results) => 
-                {
+                ajaxResultChecker((results) => {
                     listPortfolio = results
                     listPortfolio = listPortfolio.map(value => {
                         value.Check = !portfolioSaved.length ? false : !!portfolioSaved.find(portfolio => portfolio.Id == value.Id);
                         return value;
                     });
                     generateListPortfolioFilter();
-                    
+
                     if (callback) callback();
                 }
-            ));
+                ));
         }
 
-        function generateListPortfolioFilter(searchString = "", data = listPortfolio){
+        function generateListPortfolioFilter(searchString = "", data = listPortfolio) {
             var portfolioFilterMenu = $("#portfolioFilterMenu");
             if (!portfolioFilterMenu || !portfolioFilterMenu?.length) return;
 
@@ -1582,8 +1589,8 @@
 
             portfolioFilterMenu.append(
                 `<div>` +
-                    `<input type="radio" name="portfolio-name" style="margin-right: 10px; cursor: pointer;" id="allPortfolio" onClick="selectPortfolioOption('allPortfolio')">` +
-                    `<label for="allPortfolio" style="cursor: pointer;">All</label>` +
+                `<input type="radio" name="portfolio-name" style="margin-right: 10px; cursor: pointer;" id="allPortfolio" onClick="selectPortfolioOption('allPortfolio')">` +
+                `<label for="allPortfolio" style="cursor: pointer;">All</label>` +
                 "</div>"
             )
 
@@ -1631,7 +1638,7 @@
         }
 
         function getProjectOfPortfolio(portfolioId, callback) {
-            ajaxPost("GetProjectOfPortfolio", Number(portfolioId), 
+            ajaxPost("GetProjectOfPortfolio", Number(portfolioId),
                 ajaxResultChecker((response) => {
                     if (response) {
                         if (!response) return;
@@ -1639,7 +1646,7 @@
                         if (callback) callback(response);
                     }
                 }
-            ));
+                ));
         }
 
         // update selected project to db
@@ -1716,7 +1723,7 @@
         }
 
         function showListPortfolioOption() {
-            toggleFilterPortfolioDropdown (false, true);
+            toggleFilterPortfolioDropdown(false, true);
             toggleFilterProjectDropdown(false);
         }
 
