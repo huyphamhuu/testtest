@@ -127,7 +127,7 @@
 
         .dashboard-controls-left label,
         .dashboard-controls-right label {
-            margin-right: 10px;
+            margin: 0px 10px;
         }
 
         .dashboard-controls-left select,
@@ -1224,12 +1224,21 @@
         }
 
         function toggleCardSetupModal(isShow = false, isClickBtn = false) {
+            console.log("in toggle");
             var cardSetupModal = $("#cardSetup");
             if (isClickBtn) {
+                console.log("in clickbtn");
                 cardSetupModal.toggle();
             } else {
+                console.log("isshow");
                 cardSetupModal.toggle(isShow);
+
             }
+        }
+        function onClickCancelCardSetup() {
+            getViewSetup(() => {
+                    toggleCardSetupModal(false);
+            });
         }
         
         function onClickApplyCardSetup() {
@@ -1238,6 +1247,7 @@
                 toggleCardSetupModal();
                 renderKanbanBoard(kanbanColumns, true);
             });
+            console.log("saveCardSetup");
         }
 
         function applyFormatName() {
