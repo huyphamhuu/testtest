@@ -43,29 +43,36 @@
             border: 1px solid #ced4da;
             background-color: #fff;
             overflow: hidden;
+            padding: 5px;
         }
         
         .icon-group > button {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 5px 10px;
+            padding: 5px;
             border: none;
             background-color: transparent;
             cursor: pointer;
             height: 100%;
+            margin-right: 5px;
         }
+
+        .icon-group > button:last-of-type { margin-right: 0; }
 
         .icon-group > button:hover {
             background-color: #f0f0f0;
+            border-radius: 3px;
         }
 
-        .icon-group > button:focus {
-            outline: none;
-        }
+        .icon-group > button:focus { outline: none; }
 
-        .icon-group .active {
-            background-color: black;
+        .icon-group .active { background-color: black; }
+
+        button.btn--active {
+            background: #f1f1f2;
+            border: 1px solid #ececec;
+            border-radius: 3px;
         }
     
         .btn-group{
@@ -73,13 +80,20 @@
             font-size:14px !important;
         }
 
-        .dashboard {
-            height: 100vh;
-            background-color: #EFEFEF;
-            padding: 20px;
+        .wf-kanban-container {
+            display: flex;
+            flex-direction: column;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #EFEFEF;
+            padding: 20px;
+        }
+
+        .wf-kanban-container__root-container {
+            overflow-y: auto;
+            min-height: 0;
+            height: 85vh; /* for scrollable */
         }
 
         .dashboard-header {
@@ -177,15 +191,21 @@
         input:checked + .slider:before {
             transform: translateX(21px);
         }
+
+        /* override style card kanban board */
+        .wx-card { cursor: default !important; }
     
         .card-template {
-            background: #fff;
-            flex: 1;
-            display: flex;
-            align-items: center;
             padding: 10px;
             border-radius: 6px;
             margin: 5px 0;
+        }
+
+        .card-template h3 {
+            font-size: 15px;
+            font-weight: 500;
+            color:#0C6B93;
+            margin: 0;
         }
 
         .card-header {
@@ -196,10 +216,6 @@
             font-weight: bold;
             text-align: center;
             width: 100%;
-        }
-
-        .dropdown-menu {
-            background-color: white; 
         }
 
         .dropdown-item {
@@ -219,7 +235,6 @@
         }
 
         .section.title-section {
-  
             color:#9e9e9e;
             font-weight:600;
         }
@@ -265,6 +280,24 @@
             width: 40%;
         }
 
+        .section img {
+            width: 20px;
+            height: 20px;
+            border: 1px solid transparent;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .value-container {
+            display: flex;
+            width: 40%;
+        }
+
+        .value-container span {
+            font-weight: bold;
+            flex: 1;
+        }
+
         .date-value{
             margin-right: 10px;
         }
@@ -280,27 +313,6 @@
             border-bottom-style: none;
             border-left-style: solid;
         }
-
-        .card-template .status-color {
-            border-radius: 50%;
-            flex: 0 0 30px;
-            height: 30px;
-        }
-
-        .card-template .label {
-            font-size: 15px;
-            font-weight: 500;
-            flex: 1 1 auto;
-            color:#0C6B93;
-        }
-
-        .card-template .menu-icon {
-            cursor: pointer;
-        }
-
-            .card-template .menu-icon:hover {
-                background-color: var(--wx-background-hover);
-            }
 
         .avatar {
             vertical-align: middle;
@@ -363,10 +375,7 @@
 
         .inner__field-selection input[type="checkbox"] { margin: 0 8px 0 0; }
 
-        .inner__footer {
-            width: fit-content;
-            margin-left: auto;
-        }
+        .inner__footer { width: fit-content; margin-left: auto; }
 
         .custom-modal__footer button,
         .inner__footer button {
@@ -404,13 +413,9 @@
             right: -455px;
         }
 
-        .custom-modal h3 {
-            font-size: 18px;
-        }
+        .custom-modal h3 { font-size: 18px; }
 
-        .custom-modal__body {
-            margin: 15px 0;
-        }
+        .custom-modal__body { margin: 15px 0; }
 
         .body__custom-container {
             border: solid;
@@ -458,25 +463,6 @@
             background: #EFEFEF;
         }
 
-        .form-check{
-            display:flex;
-        }
-
-        .form-check-input{
-            margin-left: 0.1px;
-            margin-top:0.7rem;
-        }
-
-        .dropdown-toggle::after {
-            display: none;
-        }
-        .wx-label.svelte-ms9wpd.svelte-ms9wpd{
-            font-weight:800;
-        }
-        .dashboard-controls-right{
-            margin-top:5px;
-        }
-
         @media only screen and (max-width: 1280px) {
             .card-setup-container {
                 left: 0;
@@ -491,16 +477,119 @@
             }
         }
 
+        .dropdown-menu > label { margin: 0; }
+
+        .menu-item {
+            display: block;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .menu-item:hover { background-color: #f8f9fa; }
+
+        .menu-item:last-of-type { margin-bottom: 0; }
+
+        .menu-item > input { margin-right: 5px; cursor: pointer; }
+
+        .dropdown-toggle::after { display: none; }
+        .wx-label.svelte-ms9wpd.svelte-ms9wpd{ font-weight:800; }
+        .dashboard-controls-right{ margin-top:5px; }
+
+        .project-search-dropdown {
+            margin-left: 15px;
+            height: 35px;
+        }
+
+        .project-search-dropdown > button {
+            background: #f8f9fa;
+            height: 100%;
+            font-size: 13px;
+        }
+
+        .project-filter-button{
+            border: none;
+            background: white;
+            width: 100%;
+            justify-content: space-between;
+            display: flex;
+            align-items: center;
+            outline: none;
+            height: 35px;
+            font-size: 13px;
+        }
+
+        .project-filter-button:hover {
+            background: #E8E8E8;
+            cursor: pointer;
+        }
+
+        .project-filter-button:focus,
+        .button--active {
+            background: #babfc7;
+            outline: none;
+        }
+
+        .project-filter-dropdown {
+            position: absolute;
+            top: 0px;
+            left: 160px;
+            border: solid 1px;
+            z-index: 10;
+            background: white;
+            width: max-content;
+            border-color: #aaaaaa;
+            font-size: 13px;
+            max-height: 380px;
+        }
+
+        .project-filter-menu {
+            border-color: #aaaaaa;
+            border-top: 1px solid #babfc7;
+            padding: 10px  0px 10px 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            max-width: 300px;;
+        }
+
+        .portfolio-filter-menu > div,
+        .project-filter-menu > div { margin-bottom: 10px; }
+
+        .portfolio-filter-menu label,
+        .project-filter-menu label { margin: 0; }
+
+        .portfolio-filter-dropdown {
+            position: absolute;
+            left: 160px;
+            top: 40px;
+            border: solid 1px;
+            z-index: 10;
+            background: white;
+            width: max-content;
+            border-color: #aaaaaa;
+            font-size: 13px;
+            max-height: 380px;
+        }
+
+        .portfolio-filter-menu {
+            border-color: #aaaaaa;
+            border-top: 1px solid #babfc7;
+            padding: 10px  0px 10px 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .search-portfolio {
+            padding: 10px;
+        }
+
+        .search-project {
+            padding: 10px;
+        }
+
     </style>
     <script>
+        // kanban configuration
         const { Kanban, template } = kanban;
-
-        const users = [ // TODO: delete if no use anymore
-            { id: 1, label: "Steve Smith", avatar: "https://snippet.dhtmlx.com/codebase/data/kanban/01/img/user-1.jpg" },
-            { id: 2, label: "Aaron Long", avatar: "https://snippet.dhtmlx.com/codebase/data/kanban/01/img/user-2.jpg" },
-            { id: 3, label: "Angela Allen", avatar: "https://snippet.dhtmlx.com/codebase/data/kanban/01/img/user-3.jpg" },
-            { id: 4, label: "Angela Long", avatar: "https://snippet.dhtmlx.com/codebase/data/kanban/01/img/user-4.jpg" },
-        ];
 
         const cardShape = {
             label: true,
@@ -510,7 +599,7 @@
             end_date: true,
             users: {
                 show: true,
-                values: users,
+                values: [],
             },
             priority: {
                 show: true,
@@ -526,17 +615,53 @@
             attached: false,
         };
 
-        const description = "1020 Income Tax Return/Simple";
+        // document: https://docs.dhtmlx.com/kanban/api/config/js_kanban_columnshape_config/
+        var columnShape = {
+            menu: {
+                show: true,
+                items: ({ column, columnIndex, columns, store }) => [
+                    {
+                        id: "move-column:left",
+                        icon: "wxi-arrow-left",
+                        text: "Move left",
+                        disabled: columnIndex <= 0
+                    },
+                    {
+                        id: "move-column:right",
+                        icon: "wxi-arrow-right",
+                        text: "Move right",
+                        disabled: columnIndex >= columns.length - 1
+                    },
+                ]
+            }
+        };
+
+        // document: https://docs.dhtmlx.com/kanban/api/config/js_kanban_rowshape_config/
+        var rowShape = {
+            menu: {
+                show: true,
+                items: ({ row, rowIndex, rows, store }) => {
+                    return null;
+                }
+            }
+        }
 
         var formatNameObj = {};
         var statuses = [];
         var isSwimlane = false;
 
+        var ViewMode = {
+            List: 0,
+            Detail: 1,
+            Board: 2
+        }
+
         var statusIds = {
+            All: -1,
             Active: 0,
-            Complete: 1,
+            Completed: 1,
             Pending: 2,
-            Canceled: 8,
+            Cancelled: 8,
             Suspended: 22
         }
 
@@ -583,16 +708,45 @@
         var portfolioSaved = [];
         var workflowData = [];
 
+        var timer;
+        var selectedProject = {};
+        var selectedPortfolio = {};
+        // list project id of selected portfolio
+        var selectedPortfolioProjectIds = [];
+
+        $(document).ready(function () {
+            // should not close dropdown menu when click on
+            $("#statusMenuContainer").on("click", (e) => {
+                e.stopPropagation();
+            });
+
+            $("#projectFilterContainer").on("click", (e) => {
+                e.stopPropagation();
+            });
+        });
+
         function pageLoad() {
             loadData();
+        }
+
+        // on click 'view mode' button
+        function onSelectViewMode(viewMode = ViewMode.Board) {
+            if (![ViewMode.List, ViewMode.Detail, ViewMode.Board].includes(viewMode)) return;
+
+            if (viewMode !== ViewMode.Board) {
+                // query to parent syntax
+                window.parent.document.getElementById("DIVContact").style.display = "block";
+                window.parent.document.getElementById("MainTableID").style.cssText = "padding-left: 220px; padding-right: 10px; width: 80%;";
+                window.parent.document.getElementById("workStepKanban").setAttribute("src", "");
+                window.parent.document.getElementById("workStepKanban").style.display = "none";
+                window.location.href = `Javascript:parent.ToggleListView(${viewMode});`;
+            }
         }
 
         // render Kanban board UI
         function renderKanbanBoard(columns = kanbanColumns, isUpdatedBoard = false, data = workflowData ?? cards) {
             // destructor() is remove all Kanban board config in UI
-
             if (isUpdatedBoard) kanbanBoard.destructor();
-
             // card info: data, column, row
             var cardData = [];
             var cardColumns = [];
@@ -614,7 +768,7 @@
                     priority: item.Priority,
                     color: "#65D3B3",
                     start_date: new Date("01/07/2021"),
-                    users: [3, 2],
+                    users: [],
                     column: item.WorkStepDescription.replaceAll(" ", ""),
                     type: item.WorkflowId,
                     comments: [],
@@ -644,22 +798,27 @@
                 };
                 cardRows.push(rowItem);
             });
+            // save column order to column order table in database after load page
+            var columnOrder = JSON.stringify(cardColumns);
+            ajaxPost("SaveColumnOrder", columnOrder, ajaxResultChecker(() => { }));
 
             // init kanban board
             kanbanBoard = new Kanban("#root", {
                 columns: cardColumns,
                 rows: cardRows,
                 cards: cardData,
-                cardTemplate: template(card => cardTemplate(card)),
+                cardTemplate: template(card => cardTemplate(card)), // render content card
                 cardShape,
                 readonly: {
                     edit: true, 
                     add: false, 
-                    select: true, 
-                    dnd: true 
+                    select: false, 
+                    dnd: false // prevent user drag card
                 },
                 editorShape: [],
-                rowKey: "type" // config get which card field to be row key
+                rowKey: isSwimlane ? "type" : "", // config get which card field to be row key
+                columnShape, // custom column functionality
+                rowShape, // custom row functionality
             });
 
             // set value for global variable
@@ -673,8 +832,7 @@
 
             kanbanBoard.api.on("move-column", (obj) => {
                 var columnOrder = JSON.stringify(kanbanBoard.api.getState().columns);
-
-                ajaxPost("SaveColumnOrder", { columnOrder, workflowId}, ajaxResultChecker(() => {}));
+                ajaxPost("SaveColumnOrder",  columnOrder, ajaxResultChecker(() => {}));
             });
         }
 
@@ -694,21 +852,6 @@
         function cardTemplate({ cardFields, selected }) {
             const { label, color } = cardFields;
 
-            const userAvatars = cardFields.users.map(userId => {
-                const user = users.find(user => user.id === userId);
-                return `<img src="${user.avatar}" title="${user.label}" class="avatar">`;
-            }).join('');
-
-            const userInfos = cardFields.users.map(userId => {
-                const user = users.find(user => user.id === userId);
-                return `
-             <div class="user-info">
-              <img src="${user.avatar}" title="${user.label}" class="avatar">
-                 <span>${user.label}</span>
-                
-             </div>`;
-            }).join('');
-
             // apply formatNameObj to card label
             // ex: 1\4 (5) 2
             // split("") will separate all character in string
@@ -727,16 +870,7 @@
                 }
             });
 
-            var cardHtml = `
-                <div class="card-template ${selected ? "selected" : ""}">
-                    <div class="label">${cardLabel}</div>
-                    <div
-                        class="menu-icon"
-                        data-menu-id=${cardFields.id}
-                        data-ignore-selection="true">
-                            <i class="wxi-dots-v"></i>
-                    </div>
-                </div>`;
+            var cardHtml = `<div class="card-template"><h3>${cardLabel}</h3></div>`;
 
             var workflowField = fieldSelections.find(item => item.field === "Workflow");
             if (workflowField?.checked || workflowField?.indeterminate) {
@@ -779,6 +913,19 @@
                         return;
                     }
 
+                    if (item.field === "AssignedTo") {
+                        var imgUrl = cardFields.data["AssignedToImgUrl"];
+
+                        cardHtml += `${(isShowTargetField(item)) ? `<div class="section">
+                                    <span class="label">${item.headerName}</span>
+                                    <div class="value-container">
+                                        ${imgUrl !== "" ? `<img src="${escapeHTML(imgUrl)}" alt="avatar" style="margin-right: 5px;">` : ""}
+                                        <span class="value">${escapeHTML(cardFields.data["AssignedDescription"])}</span>
+                                    </div>
+                                </div>` : ""}`;
+                        return;
+                    }
+
                     cardHtml += `${(isShowTargetField(item)) ? `<div class="section">
                             <span class="label">${item.headerName}</span>
                             <span class="value">${escapeHTML(cardFields.data[item.field])}</span>
@@ -796,7 +943,7 @@
 
         // load init data
         function loadData() {
-            ajaxPost("GetColumnOrder", workflowId, ajaxResultChecker((result) => {
+            ajaxPost("GetColumnOrder", {}, ajaxResultChecker((result) => {
                 kanbanColumns = result ? JSON.parse(result) : [];
                 getViewSetup(() => {
                     generateCardSetup(fieldSelections, () => {
@@ -889,12 +1036,7 @@
             var statusSetupString = JSON.stringify(statusSetup);
 
             ajaxPost("SaveStatusSetup", statusSetupString, ajaxResultChecker((result) => {
-                if (result) {
-                    // Implement here when save status setup successfully
-                }
-                else {
-                    alert("Can't save status");
-                }
+                if (!result) alert("Can't save status");
             }));
         }
 
@@ -924,12 +1066,19 @@
 
                     // Get default status when can't get status
                     statuses = !result.Statuses ? createDefaultStatus() : JSON.parse(result.Statuses);
-                    if (statuses.length === 0) {
-                        statuses = createDefaultStatus();
-                    }
                     isSwimlane = result.SwimlaneMode;
-                    setCheckboxStatuses();
+                    setCheckboxStatuses(statuses);
                     setToggleSwimlanesMode();
+
+                    // get selected filter project
+                    selectedProject = (result.SelectedProject?.length)
+                        ? JSON.parse(result.SelectedProject)
+                        : getDefaultSelectedOption();
+
+                    // get selected filter portfolio
+                    selectedPortfolio = (result.SelectedPortfolio?.length)
+                        ? JSON.parse(result.SelectedPortfolio)
+                        : getDefaultSelectedOption(false);
                 }
                 else {
                     fieldSelections = initialCardSetup();
@@ -939,23 +1088,36 @@
                     isSwimlane = false;
                     setCheckboxStatuses();
                     setToggleSwimlanesMode();
+                    selectedProject = getDefaultSelectedOption();
+                    selectedPortfolio = getDefaultSelectedOption(false);
+                }
+
+                if (selectedPortfolio.Id !== "allPortfolio") {
+                    getProjectOfPortfolio(selectedPortfolio.Id, (response) => {
+                        if (!response && !response?.length) return;
+
+                        selectedPortfolioProjectIds = response.map(item => ({ Id: item.Id }));
+                    });
                 }
 
                 if (callback) callback();
             }));
         }
 
+        function getDefaultSelectedOption(isProject = true) {
+            return (isProject)
+                ? { Id: "allProject", Name: "All", Check: true }
+                : { Id: "allPortfolio", Name: "All", Check: true };
+        }
+
         // default client\project description custom data
         function createDefaultFormat() {
             var nameFormat = [
-
-
                 { "headerName": "Client Long Name", "field": "ClientLongName", "checked": true, "order": 1 },
                 { "headerName": "Client Short Name", "field": "ClientShortName", "checked": false, "order": 2 },
                 { "headerName": "Client Code", "field": "ClientCode", "checked": false, "order": 3 },
                 { "headerName": "Project Description", "field": "ProjectName", "checked": true, "order": 4 },
                 { "headerName": "Project Code", "field": "ProjectCode", "checked": true, "order": 5 }
-
             ]
             var formatString = "1\\4 (5)";
 
@@ -964,11 +1126,10 @@
 
         function createDefaultStatus() {
             return [
-
                 { "name": "Active", "id": statusIds.Active, "checked": true, },
-                { "name": "Complete", "id": statusIds.Complete, "checked": true, },
+                { "name": "Completed", "id": statusIds.Completed, "checked": true, },
                 { "name": "Pending", "id": statusIds.Pending, "checked": true, },
-                { "name": "Canceled", "id": statusIds.Canceled, "checked": true, },
+                { "name": "Cancelled", "id": statusIds.Cancelled, "checked": true, },
                 { "name": "Suspended", "id": statusIds.Suspended, "checked": true,},
             ]
         }
@@ -1124,97 +1285,6 @@
                 $(`.sortable-item input[name=${value?.field}]`).prop("checked", false);
             })
         }
-        function updateStatus(statusName, isChecked) {
-            for (var i = 0; i < statuses.length; i++) {
-                if (statuses[i].id === statusIds[statusName]) {
-                    statuses[i].checked = isChecked;
-                }
-            }
-            var allChecked = statuses.every(status => status.checked);
-            $('#all-statuses').prop('checked', allChecked);
-        }
-
-        function setCheckboxStatuses() {
-
-            if (statuses.length === 0) {
-                statuses = createDefaultStatus();
-            }
-            statuses.forEach(status => {
-                if (status.checked) {
-                    $('#' + status.name.toLowerCase() + '-status').prop('checked', true);
-                }
-            });
-        }
-
-        function setToggleSwimlanesMode() {
-            //isSwimlane = true;
-            if (isSwimlane) {
-                $('#swimlanes-toggle').prop('checked', true);
-            }
-        }
-
-        $(document).ready(function () {
-            $("#Workstepcheckbox").click(function () {
-                $("#Workstepcheckbox").prop("checked", true);
-                alert("Checkbox checked");
-            });
-
-            $("#swimlanes-toggle").change(function () {
-               var isChecked = $(this).prop("checked");
-           });
-
-           $(".form-check-input").change(function () {
-               var checkboxId = $(this).attr("id");
-               var isChecked = $(this).prop("checked");
-
-           });
-
-           $("#swimlanes-toggle").change(function () {
-                isSwimlane = !isSwimlane;
-                saveSwimlaneMode()
-            });
-            $(".form-check-input").change(function () {
-                var checkboxId = $(this).attr("id");
-                var isChecked = $(this).prop("checked");
-                switch (checkboxId) {
-                    case 'all-statuses':
-                        $('#active-status').prop('checked', true);
-                        $('#completed-status').prop('checked', true);
-                        $('#pending-status').prop('checked', true);
-                        $('#cancelled-status').prop('checked', true);
-                        $('#suspended-status').prop('checked', true);
-
-                        updateStatus('Active', isChecked);
-                        updateStatus('Complete', isChecked);
-                        updateStatus('Pending', isChecked);
-                        updateStatus('Canceled', isChecked);
-                        updateStatus('Suspended', isChecked);
-                        break;
-                    case 'pending-status':
-                        updateStatus('Pending', isChecked);
-                        break;
-                    case 'active-status':
-                        updateStatus('Active', isChecked);
-                        break;
-                    case 'completed-status':
-                        updateStatus('Complete', isChecked);
-                        break;
-                    case 'cancelled-status':
-                        updateStatus('Canceled', isChecked);
-
-                        break;
-                    case 'suspended-status':
-                        updateStatus('Suspended', isChecked);
-                        break;
-                    case 'all-status':
-
-                    default:
-                        alert("undefined-status");
-                        return;
-                }
-                saveStatusSetup(statuses); 
-            });
-        })
 
         function getWorkflowData(callback) {
             var requestParams = createGetWorkflowDataRequest();
@@ -1228,35 +1298,34 @@
         // TODO: apply filter request param later in here
         function createGetWorkflowDataRequest() {
             // If every item of the list is checked, make it empty and pass 0 to stored procedure. It won't insert all element into the table (increase performance)
-            var listIdProject = listProject.every(element => element.Check === true) ? [] : listProject.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+            var isAllProjects = selectedProject.Id === "allProject" || selectedPortfolio.Id === "allPortfolio";
+            var listIdProject = (isAllProjects) ? [] : [{ Id: selectedProject.Id }, ...selectedPortfolioProjectIds];
             var listIdWorkflowTemplate = listWorkflowTemplateFilter.every(element => element.Check === true) ? [] : listWorkflowTemplateFilter.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
             var listIdTaxReturnType = listTaxReturnType.every(element => element.Check === true) ? [] : listTaxReturnType.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
             var listIdDifficulty = listDifficulty.every(element => element.Check === true) ? [] : listDifficulty.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
             var optionPriority = getPriorityDefaultValue();
             var listWorkflowStatus = getWorkflowStatus();
-            var listWorkStepStatus = getWorkflowStatus();
+            var listWorkStepStatus = getWsStatusRequest();
             var listIdPriority = optionPriority.every(element => element.Check === true) ? [] : optionPriority.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
             var listIdWorkflowStatus = listWorkflowStatus.every(element => element.Check === true) ? [] : listWorkflowStatus.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
-            var listIdWorkstepStatus = listWorkStepStatus.every(element => element.Check === true) ? [] : listWorkStepStatus.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
+            var listIdWorkStepStatus = listWorkStepStatus.every(element => element.Check === true) ? [] : listWorkStepStatus.filter((element) => element.Check === true).map((element) => ({Id: element.Id}));
 
             return {
                 listProject: JSON.stringify(listIdProject),
-                listWorkflowTemplate: JSON.stringify(listIdWorkflowTemplate),
+                listWorkflowTemplate: JSON.stringify(listIdWorkflowTemplate), // in kanban board we don't have filter by workflow template
                 listTaxReturnType: JSON.stringify(listIdTaxReturnType),
                 dueDate: JSON.stringify({
                     StartDate: dueDateOptions.StartDate,
                     EndDate: dueDateOptions.EndDate
-                }),
-                difficulty: JSON.stringify(listIdDifficulty),
-                priority: JSON.stringify(listIdPriority),
-                targetDate: JSON.stringify(targetDateOptions),
-                workflowStatus: JSON.stringify(listIdWorkflowStatus), // no need
-                workstepDescription: $("#searchWorkStepInput")?.val() ?? "", // TODO: get id of input in UI
-                workstepStatus: JSON.stringify(listIdWorkstepStatus),
-                teamAssigned: listTeam.find(value => value.Check)?.Id.toString() || "",
-                isUncheckAllPortfolio: false,//listPortfolio.every(value => value.Check === false),
-                isUncheckAllProject: false,//listProject.every(value => value.Check === false),
-                isUncheckAllTemplate: false//listWorkflowTemplateFilter.every(value => value.Check === false)
+                }), // in kanban board we don't have filter by due date
+                difficulty: JSON.stringify(listIdDifficulty), // in kanban board we don't have filter by difficulty
+                priority: JSON.stringify(listIdPriority), // in kanban board we don't have filter by priority
+                targetDate: JSON.stringify(targetDateOptions), // in kanban board we don't have filter by target date
+                workflowStatus: JSON.stringify(listIdWorkflowStatus), // in kanban board we don't have filter by workflow status
+                workstepDescription: $("#searchWorkStepInput")?.val() ?? "", // in kanban board we don't have filter by ws desc
+                workstepStatus: JSON.stringify(listIdWorkStepStatus),
+                teamAssigned: listTeam.find(value => value.Check)?.Id.toString() || "", // in kanban board we don't have filter by team assigned
+                isUncheckAllTemplate: false // in kanban board we don't have filter by workflow template
             }
         }
 
@@ -1268,10 +1337,72 @@
                         value.Check = false;
                         return value;
                     });
+                    generateListProjectFilter();
 
                     if (callback) callback();
                 }
             ));
+        }
+
+        function generateListProjectFilter(searchString = "", data = listProject) {
+            var prjFilterMenu = $('#projectFilterMenu');
+            if (!prjFilterMenu || !prjFilterMenu?.length) return;
+
+            prjFilterMenu.empty();
+            prjFilterMenu.append(
+                `<div>` +
+                    `<input type="radio" name="project-name" style="margin-right: 10px; cursor: pointer;" id="allProject" onClick="selectProjectOption('allProject')">` +
+                    `<label for="allProject" style="cursor: pointer;">All</label>` +
+                "</div>"
+            )
+
+            data.forEach(value => {
+                if (searchString == "" || value.Name.toLowerCase().includes(searchString.toLowerCase())) {
+                    prjFilterMenu.append(
+                        `<div style="display:flex">` +
+                        `<input type="radio" name="project-name" style="margin-right: 10px; cursor: pointer;" onClick="selectProjectOption('${value.Id}')" id="project-${value.Id}" ${value.Check ? "checked" : ""}>` +
+                        `<label for="project-${value.Id}" style="cursor: pointer; white-space: normal">${value.Name}</label>` +
+                        "</div>"
+                    );
+                }
+            });
+
+            var radioId = (selectedProject.Id !== "allProject")
+                ? `#project-${selectedProject.Id}`
+                : `#allProject`;
+            $(`input[type=radio]${radioId}`).prop("checked", true);
+        }
+
+        function selectProjectOption(selectedOptionId) {
+            if (timer) clearTimeout(timer);
+
+            var selectedOption = listProject.find(item => item.Id.toString() === selectedOptionId);
+            if (!selectedOption) {
+                if (selectedOptionId !== "allProject") return;
+                selectedOption = getDefaultSelectedOption();
+            }
+
+            timer = setTimeout(() => updateSelectedProject(selectedOption), 500);
+            selectedProject = selectedOption;
+            getWorkflowData(() => renderKanbanBoard(kanbanColumns, true, workflowData));
+        }
+
+        // update selected project to db
+        function updateSelectedProject(selectedOption) {
+            var request = JSON.stringify(selectedOption);
+            ajaxPost("SaveSelectedProject", request, ajaxResultChecker((res) => {
+                if (!res) alert("Something's went wrong. Please try again!");
+            }));
+        }
+
+        // on key up to search project by name
+        function searchProject() {
+            if (timer) clearTimeout(timer);
+
+            timer = setTimeout(function() {
+                var searchValue = $('#searchProjectInput').val();
+                generateListProjectFilter(searchValue, listProject);
+            }, 500);
         }
 
         function getWorkflowTemplateForFilter(callback) {
@@ -1336,6 +1467,16 @@
             ];
         }
 
+        function getWsStatusRequest() {
+            return statuses.map(item => {
+                return {
+                    Name: item.name,
+                    Id: item.id,
+                    Check: item.checked
+                };
+            });
+        }
+
         function getListPortfolio(callback) {
             ajaxPost("GetListPortfolio", {},
                 ajaxResultChecker((results) => 
@@ -1345,18 +1486,200 @@
                         value.Check = !portfolioSaved.length ? false : !!portfolioSaved.find(portfolio => portfolio.Id == value.Id);
                         return value;
                     });
+                    generateListPortfolioFilter();
                     
                     if (callback) callback();
                 }
             ));
+        }
+
+        function generateListPortfolioFilter(searchString = "", data = listPortfolio){
+            var portfolioFilterMenu = $("#portfolioFilterMenu");
+            if (!portfolioFilterMenu || !portfolioFilterMenu?.length) return;
+
+            portfolioFilterMenu.empty();
+
+            portfolioFilterMenu.append(
+                `<div>` +
+                    `<input type="radio" name="portfolio-name" style="margin-right: 10px; cursor: pointer;" id="allPortfolio" onClick="selectPortfolioOption('allPortfolio')">` +
+                    `<label for="allPortfolio" style="cursor: pointer;">All</label>` +
+                "</div>"
+            )
+
+            data.forEach(value => {
+                if (searchString == "" || value.Name.toLowerCase().includes(searchString.toLowerCase())) {
+                    portfolioFilterMenu.append(
+                        `<div>` +
+                        `<input type="radio" name="portfolio-name" style="margin-right: 10px; cursor: pointer;" onClick="selectPortfolioOption('${value.Id}')" id="portfolio-${value.Id}" ${value.Check ? "checked" : ""}>` +
+                        `<label for="portfolio-${value.Id}" style="cursor: pointer;">${value.Name}</label>` +
+                        "</div>"
+                    );
+                }
+            });
+
+            var radioId = (selectedPortfolio.Id !== "allPortfolio")
+                ? `#portfolio-${selectedPortfolio.Id}`
+                : `#allPortfolio`;
+            $(`input[type=radio]${radioId}`).prop("checked", true);
+        }
+
+        // TODO: select portfolio option
+        function selectPortfolioOption(selectedOptionId) {
+            if (timer) clearTimeout(timer);
+
+            var selectedOption = listPortfolio.find(item => item.Id.toString() === selectedOptionId);
+            if (!selectedOption) {
+                if (selectedOptionId !== "allPortfolio") return;
+                selectedOption = getDefaultSelectedOption(false);
+            }
+
+            timer = setTimeout(() => updateSelectedPortfolio(selectedOption), 500);
+            selectedPortfolio = selectedOption;
+
+            if (selectedOptionId !== "allPortfolio") {
+                getProjectOfPortfolio(selectedOptionId, (response) => {
+                    if (!response) return;
+
+                    selectedPortfolioProjectIds = response.map(item => ({ Id: item.Id }));
+                    getWorkflowData(() => renderKanbanBoard(kanbanColumns, true, workflowData));
+                });
+            } else {
+                selectedPortfolioProjectIds.push(getDefaultSelectedOption(false));
+                getWorkflowData(() => renderKanbanBoard(kanbanColumns, true, workflowData));
+            }
+        }
+
+        function getProjectOfPortfolio(portfolioId, callback) {
+            ajaxPost("GetProjectOfPortfolio", Number(portfolioId), 
+                ajaxResultChecker((response) => {
+                    if (response) {
+                        if (!response) return;
+
+                        if (callback) callback(response);
+                    }
+                }
+            ));
+        }
+
+        // update selected project to db
+        function updateSelectedPortfolio(selectedOption) {
+            var request = JSON.stringify(selectedOption);
+            ajaxPost("SaveSelectedPortfolio", request, ajaxResultChecker((res) => {
+                if (!res) alert("Something's went wrong. Please try again!");
+            }));
+        }
+
+        function updateStatus(targetStatus, isChecked, callback) {
+            if (targetStatus === statusIds.All) {
+                // should always checked all options when click "All" option
+                isChecked = true;
+                $("#statusMenuContainer input[type=checkbox]").prop("checked", isChecked);
+                statuses.forEach(item => item.checked = isChecked);
+            } else {
+                var targetStatusIndex = statuses.findIndex(status => status.id === targetStatus);
+                if (targetStatusIndex >= 0) statuses[targetStatusIndex].checked = isChecked;
+
+                var allChecked = statuses.every(status => status.checked);
+                $('#all').prop('checked', allChecked);
+            }
+
+            if (callback) callback();
+        }
+
+        function setCheckboxStatuses(data = statuses) {
+            if (data.length === 0) return;
+
+            var checkedStatusLength = 0;
+            data.forEach(status => {
+                if (status.checked) ++checkedStatusLength;
+
+                $('#' + status.name.toLowerCase()).prop('checked', status.checked);
+            });
+
+            if (checkedStatusLength === data.length) $("#all").prop("checked", true);
+        }
+
+        function setToggleSwimlanesMode() {
+            $('#swimlanes-toggle').prop('checked', isSwimlane);
+        }
+
+        function onChangeStatusInput(event) {
+            var checkboxId = event.target.id ?? "";
+            var isChecked = event.target.checked;
+            if (checkboxId.length) {
+                checkboxId = checkboxId.charAt(0).toUpperCase() + checkboxId.slice(1);
+            }
+
+            updateStatus(statusIds[checkboxId], isChecked, () => {
+                saveStatusSetup(statuses);
+                var statusCheckboxes = $("#statusMenuContainer input[type=checkbox]");
+                statusCheckboxes.prop("disabled", true);
+                getWorkflowData(() => {
+                    statusCheckboxes.prop("disabled", false);
+                    renderKanbanBoard(kanbanColumns, true);
+                });
+            });
+        }
+
+        function onSelectProjectSearchDropdown() {
+            // should reset active option when open dropdown
+            $("#projectSearchMenu").children("button").removeClass("button--active");
+            // should hide children popups (if opening)
+            $(".project-filter-dropdown").hide();
+            $(".portfolio-filter-dropdown").hide();
+        }
+
+        function showListProjectOption() {
+            toggleFilterProjectDropdown(false, true);
+            toggleFilterPortfolioDropdown(false);
+        }
+
+        function showListPortfolioOption() {
+            toggleFilterPortfolioDropdown (false, true);
+            toggleFilterProjectDropdown(false);
+        }
+
+        function toggleFilterProjectDropdown(isShow = true, isClick = false) {
+            var dropdown = $("#projectFilterDropdown");
+            if (!dropdown || !dropdown?.length) return;
+
+            if (isClick) {
+                dropdown.toggle();
+                $(".project-filter-button").removeClass("button--active");
+                $("#projFilterBtn").toggleClass("button--active");
+                return;
+            }
+
+            dropdown.toggle(isShow);
+        }
+
+        function toggleFilterPortfolioDropdown(isShow = true, isClick = false) {
+            var dropdown = $("#portfolioFilterDropdown");
+            if (!dropdown || !dropdown?.length) return;
+
+            if (isClick) {
+                dropdown.toggle();
+                $(".project-filter-button").removeClass("button--active");
+                $("#portfolioFilterBtn").toggleClass("button--active");
+                return;
+            }
+
+            dropdown.toggle(isShow);
+        }
+
+        function onChangeSwimlanesMode(event) {
+            isSwimlane = event.target.checked;
+            saveSwimlaneMode();
+
+            // render kanban board
+            renderKanbanBoard(kanbanColumns, true);
         }
     </script>
 </head>
 <body onload="Javascript:pageLoad();">
     <form runat="server"></form>
 
-    <div class="Activities-page">
-       
+    <div class="wf-kanban-container">
         <div class="dashboard">
             <div class="dashboard-header">
                 <h2 style="color:#4A4A4A; font-weight: bold;">Activities</h2>
@@ -1367,13 +1690,12 @@
             <div class="dashboard-controls">
                 <div class="dashboard-controls-left">
                     <div class="icon-group" style="height: 35px;">
-                        <button><i class="fas fa-bars"></i></button>
-                        <button><i class="fas fa-grip-horizontal"></i></button>
-                        <button><i class="fas fa-align-right"></i></button>
+                        <button onclick="onSelectViewMode(0)"><i class="fas fa-bars" style="width: 15px; height: 15px;"></i></button>
+                        <button onclick="onSelectViewMode(1)"><img src="./images/detail-view-icon.png" alt="kanban-board-icon" style="width: 15px; height: 15px;"/></button>
+                        <button class="btn--active"><img src="./images/kanban-view-icon.png" alt="kanban-board-icon" style="width: 15px; height: 15px;"/></button>
                     </div>
                     <div class="btn-group" style="height: 35px; border: 1px;">
-                        <button type="button" class="btn btn-light"
-                            style="font-weight: bold; margin-right: 0px; font-size: 13px">
+                        <button type="button" class="btn btn-light" style="font-weight: bold; margin-right: 0px; font-size: 13px">
                             Display
                         </button>
                         <div class="btn-group">
@@ -1392,52 +1714,80 @@
                             </ul>
                         </div>
                     </div>
+
+                    <!-- filter by project and portfolio -->
+                    <div class="dropdown project-search-dropdown" id="projectSearchDropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="projectSearchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="onSelectProjectSearchDropdown()">
+                            Project Search <span class="caret"></span>
+                        </button>
+                        <div id="projectFilterContainer" class="dropdown-menu" aria-labelledby="projectSearchMenuButton">
+                            <div id="projectSearchMenu">
+                                <button id="projFilterBtn" class="project-filter-button" onclick="showListProjectOption()">
+                                    <span>Project</span>
+                                    <i class='fas fa-angle-right'></i>
+                                </button>
+            
+                                <button id="portfolioFilterBtn" class="project-filter-button" onclick="showListPortfolioOption()">
+                                    <span>Portfolio of Projects</span>
+                                    <i class='fas fa-angle-right'></i>
+                                </button>
+                            </div>
+                            
+                            <!-- project menu -->
+                            <div class="dropdown-menu project-filter-dropdown" style="padding: 0; overflow: hidden" id="projectFilterDropdown">
+                                <div class="search-project" style="padding: 10px 0px;">
+                                    <input class="search-input" style="margin: 0px 10px; width: 90%;" id="searchProjectInput" placeholder="Search..." onkeyup="searchProject()"></input>
+                                </div>
+                                <div class="project-filter-menu" id="projectFilterMenu"></div>
+                            </div>
+        
+                            <!-- Portfolio menu -->
+                            <div class="dropdown-menu portfolio-filter-dropdown" style="padding: 0; overflow: hidden" id="portfolioFilterDropdown">
+                                <div class="search-portfolio" style="padding: 10px 0px;">
+                                    <input class="search-input" style="margin: 0px 10px; width: 90%;" id="searchPortfolioInput" placeholder="Search..." onkeyup="searchPortfolio()"></input>
+                                </div>
+                                <div class="portfolio-filter-menu" id="portfolioFilterMenu"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="left-border"></div>
+                    </div>
+
+                    <!-- filter by work step status -->
                     <div class="btn-group" style="height: 35px; border: 1px;">
                         <button type="button" class="btn btn-light" style="font-size: 13px; margin-right: 0px; font-weight: bold">Statuses </button>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-light dropdown-toggle" id="dropdownMenuButton1"
+                            <button type="button" class="btn btn-light dropdown-toggle" id="dropdownStatusBtn"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; padding: 0px">
                                 All
-                                     <i class="fas fa-chevron-down " style="margin-left: 18px; margin-right: 5px"></i>
+                                <i class="fas fa-chevron-down " style="margin-left: 18px; margin-right: 5px"></i>
                             </button>
-                            <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="all-statuses">
-                                        <a class="dropdown-item" href="#">All</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="true" id="pending-status">
-                                        <a class="dropdown-item" href="#">Pending</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="active-status">
-                                        <a class="dropdown-item" href="#">Active</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="completed-status">
-                                        <a class="dropdown-item" href="#">Completed</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="cancelled-status">
-                                        <a class="dropdown-item" href="#">Cancelled</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="suspended-status">
-                                        <a class="dropdown-item" href="#">Suspended</a>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div class="dropdown-menu" id="statusMenuContainer" aria-labelledby="dropdownStatusBtn">
+                                <label class="menu-item">
+                                    <input type="checkbox" value="" id="all" onchange="onChangeStatusInput(event)">
+                                    <span>All</span>
+                                </label>
+                                <label class="menu-item">
+                                    <input type="checkbox" value="true" id="pending" onchange="onChangeStatusInput(event)">
+                                    <span>Pending</span>
+                                </label>
+                                <label class="menu-item">
+                                    <input type="checkbox" value="" id="active" onchange="onChangeStatusInput(event)">
+                                    <span>Active</span>
+                                </label>
+                                <label class="menu-item">
+                                    <input type="checkbox" value="" id="completed" onchange="onChangeStatusInput(event)">
+                                    <span>Completed</span>
+                                </label>
+                                <label class="menu-item">
+                                    <input type="checkbox" value="" id="cancelled" onchange="onChangeStatusInput(event)">
+                                    <span>Cancelled</span>
+                                </label>
+                                <label class="menu-item">
+                                    <input type="checkbox" value="" id="suspended" onchange="onChangeStatusInput(event)">
+                                    <span>Suspended</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="icon-group card-setup-btn" style="margin-left: 10px; height: 35px; border: 1px;">
@@ -1481,17 +1831,16 @@
                     <div class="switch"></div>
                     <label for="swimlanes-toggle" style="font-weight: bold;">Swimlanes Mode:</label>
                     <label class="switch">
-                        <input type="checkbox" id="swimlanes-toggle" />
+                        <input type="checkbox" id="swimlanes-toggle" onchange="onChangeSwimlanesMode(event)"/>
                         <span class="slider"></span>
                     </label>
                 </div>
             </div>
-            <div id="root" style="height: calc(100% - 56px);"></div>
         </div>
-        <div class="div"> lalaland1</div>
-        <div class="div"> lalaland2</div>
+
+        <!-- Kanban board root UI -->
+        <div id="root" class="wf-kanban-container__root-container"></div>
     </div>
-      <!-- change main 1 -->
-      <!-- change main 2 -->
+      
 </body>
 </html>
