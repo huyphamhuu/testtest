@@ -22,7 +22,7 @@
     <title>Kanban Board</title>
     <style>
         .html {
-            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
         }
 
         ul {
@@ -76,7 +76,7 @@
         }
     
         .btn-group{
-            margin-left:15px;
+            margin-left:21px;
             font-size:14px !important;
         }
 
@@ -135,7 +135,7 @@
             padding: 5px;
             margin-right: 10px;
             border: 1px solid #ccc;
-            border-radius: 3px;
+            border-radius: 5px;
         }
 
         .dashboard-controls-right .switch {
@@ -150,7 +150,7 @@
         .switch {
             position: relative;
             display: inline-block;
-            width: 40px;
+            width: 30px;
             height: 20px;
         }
 
@@ -167,29 +167,33 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background-color: #fff;
             border-radius: 34px;
             transition: .4s;
+            border:3px solid;
+            padding:1px 0px 0px 1px;
         }
 
         .slider:before {
-            position: absolute;
+            display:flex;
             content: "";
-            height: 12px;
-            width: 12px;
+            height: 11px;
+            width: 11px;
             left: 4px;
             bottom: 4px;
-            background-color: white;
+            background-color: #000;
             border-radius: 50%;
             transition: .4s;
+             border:1px solid #fff;
         }
 
         input:checked + .slider {
-            background-color: #2196F3;
+            background-color: #000;
         }
 
         input:checked + .slider:before {
-            transform: translateX(21px);
+            transform: translateX(10px);
+            background-color: #fff;
         }
 
         /* override style card kanban board */
@@ -353,8 +357,8 @@
         }
 
         .inner__custom-client-project img {
-            width: 13px;
-            height: 13px;
+            width: 14px;
+            height: 14px;
             margin: auto 0;
             cursor: pointer;
         }
@@ -492,7 +496,7 @@
         .menu-item > input { margin-right: 5px; cursor: pointer; }
 
         .dropdown-toggle::after { display: none; }
-        .wx-label.svelte-ms9wpd.svelte-ms9wpd{ font-weight:800; }
+        .wx-label.svelte-ms9wpd.svelte-ms9wpd{ font-weight:700; }
         .dashboard-controls-right{ margin-top:5px; }
 
         .project-search-dropdown {
@@ -503,7 +507,7 @@
         .project-search-dropdown > button {
             background: #f8f9fa;
             height: 100%;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .project-filter-button{
@@ -515,7 +519,7 @@
             align-items: center;
             outline: none;
             height: 35px;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .project-filter-button:hover {
@@ -538,7 +542,7 @@
             background: white;
             width: max-content;
             border-color: #aaaaaa;
-            font-size: 13px;
+            font-size: 14px;
             max-height: 380px;
         }
 
@@ -566,7 +570,7 @@
             background: white;
             width: max-content;
             border-color: #aaaaaa;
-            font-size: 13px;
+            font-size: 14px;
             max-height: 380px;
         }
 
@@ -586,6 +590,63 @@
             padding: 10px;
         }
 
+        .dashboard-header > h2,
+        .dashboard-controls{
+            margin-left: 12px;
+        }
+
+        .dashboard-controls-right > switch,
+        .dashboard-header > button{
+            margin-right: 12px;
+        }
+
+        i.fas.fa-chevron-down {
+        font-size: 12px;
+        }
+
+        .dashboard-controls-left > *,
+        .dashboard-header > button{
+        border: 1px solid #CED4D9 !important;
+        border-radius: 3px;
+        }
+
+        .dashboard-controls-left button {
+        background-color: #fff;
+        }
+
+        hr {
+        margin: 22px 12px 10px 12px;
+        }
+
+        .btn btn-light dropdown-toggle{
+            font-size:14px;
+        }
+
+        .label-button {
+        width: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 5px;
+        }
+
+        .wx-material-theme {
+         --wx-color-font: #000;
+        --wx-kanban-background: #EFEFEF !important;
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
+        }
+
+        button#projectSearchMenuButton {
+        padding-right: 5px;
+        }
+
+        i.fas.fa-chevron-down {
+        padding-left: 5px;
+        }
+        .wx-label-line.svelte-30nbk4 {
+        margin: 6px 12px 4px 12px !important;
+        }
     </style>
     <script>
         // kanban configuration
@@ -1683,7 +1744,7 @@
         <div class="dashboard">
             <div class="dashboard-header">
                 <h2 style="color:#4A4A4A; font-weight: bold;">Activities</h2>
-                <button style="background-color: white; border:none; width: 40px;height: 40px;">
+                <button style="background-color: white; border:none; width: 35px;height: 35px;">
                     <i class="fas fa-th"></i>
                 </button>
             </div>
@@ -1695,12 +1756,12 @@
                         <button class="btn--active"><img src="./images/kanban-view-icon.png" alt="kanban-board-icon" style="width: 15px; height: 15px;"/></button>
                     </div>
                     <div class="btn-group" style="height: 35px; border: 1px;">
-                        <button type="button" class="btn btn-light" style="font-weight: bold; margin-right: 0px; font-size: 13px">
+                        <button type="button" class="btn btn-light" style="font-weight: bold; margin-right: 0px; font-size: 14px">
                             Display
                         </button>
                         <div class="btn-group">
                             <button type="button" class="btn btn-light dropdown-toggle" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 13px; padding: 0px">
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px;  padding: 6px 0px">
                                 Work Steps
                                         <i class="fas fa-chevron-down" style="margin-left: 12px; margin-right: 5px"></i>
                             </button>
@@ -1719,6 +1780,7 @@
                     <div class="dropdown project-search-dropdown" id="projectSearchDropdown">
                         <button class="btn btn-light dropdown-toggle" type="button" id="projectSearchMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="onSelectProjectSearchDropdown()">
                             Project Search <span class="caret"></span>
+                             <i class='fas fa-chevron-down	'></i>
                         </button>
                         <div id="projectFilterContainer" class="dropdown-menu" aria-labelledby="projectSearchMenuButton">
                             <div id="projectSearchMenu">
@@ -1754,11 +1816,11 @@
                     </div>
 
                     <!-- filter by work step status -->
-                    <div class="btn-group" style="height: 35px; border: 1px;">
-                        <button type="button" class="btn btn-light" style="font-size: 13px; margin-right: 0px; font-weight: bold">Statuses </button>
-                        <div class="btn-group">
+                    <div class="btn-group" style="height: 35px; width:144px;">
+                        <div class="label-button" style="font-size: 14px; margin-right: 0px; font-weight: bold;width:75px;margin-top:1px">Status </div>
+                        <div class="btn-group" style="width:68px">
                             <button type="button" class="btn btn-light dropdown-toggle" id="dropdownStatusBtn"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; padding: 0px">
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; padding: 6px 0px">
                                 All
                                 <i class="fas fa-chevron-down " style="margin-left: 18px; margin-right: 5px"></i>
                             </button>
@@ -1829,7 +1891,7 @@
                 </div>
                 <div class="dashboard-controls-right">
                     <div class="switch"></div>
-                    <label for="swimlanes-toggle" style="font-weight: bold;">Swimlanes Mode:</label>
+                    <label class="label-swimlanes" style="font-weight: bold;font-size:14px">Swimlanes Mode:</label>
                     <label class="switch">
                         <input type="checkbox" id="swimlanes-toggle" onchange="onChangeSwimlanesMode(event)"/>
                         <span class="slider"></span>
@@ -1837,7 +1899,7 @@
                 </div>
             </div>
         </div>
-
+         <hr />
         <!-- Kanban board root UI -->
         <div id="root" class="wf-kanban-container__root-container"></div>
     </div>
