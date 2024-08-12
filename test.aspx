@@ -400,8 +400,8 @@
 
         .footer__apply-btn,
         .footer__btn-apply {
-            background: #358852;
-            color: #fff;
+            background: #358852!important;
+            color: #fff!important;
         }
 
         /* client/project custom modal */
@@ -601,21 +601,21 @@
         }
 
         i.fas.fa-chevron-down {
-        font-size: 12px;
+            font-size: 12px;
         }
 
         .dashboard-controls-left > *,
         .dashboard-header > button{
-        border: 1px solid #CED4D9 !important;
-        border-radius: 3px;
+            border: 1px solid #CED4D9 !important;
+            border-radius: 3px;
         }
 
         .dashboard-controls-left button {
-        background-color: #fff;
+            background-color: #fff;
         }
 
         hr {
-        margin: 22px 12px 10px 12px;
+            margin: 22px 12px 10px 12px;
         }
 
         .btn btn-light dropdown-toggle{
@@ -623,29 +623,30 @@
         }
 
         .label-button {
-        width: 75px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #fff;
-        border-radius: 5px;
+            width: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border-radius: 5px;
         }
 
         .wx-material-theme {
-         --wx-color-font: #000;
-        --wx-kanban-background: #EFEFEF !important;
+            --wx-color-font: #000;
+            --wx-kanban-background: #EFEFEF !important;
             font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
         }
 
         button#projectSearchMenuButton {
-        padding-right: 5px;
+            padding-right: 5px;
         }
 
         i.fas.fa-chevron-down {
-        padding-left: 5px;
+            padding-left: 5px;
         }
+
         .wx-label-line.svelte-30nbk4 {
-        margin: 6px 12px 4px 12px !important;
+            margin: 6px 12px 4px 12px !important;
         }
     </style>
     <script>
@@ -1224,21 +1225,31 @@
         }
 
         function toggleCardSetupModal(isShow = false, isClickBtn = false) {
-            console.log("in toggle");
             var cardSetupModal = $("#cardSetup");
             if (isClickBtn) {
-                console.log("in clickbtn");
                 cardSetupModal.toggle();
+                //originalFieldSelections = getAllOrSelectedItemsFromCardSetup(true);
+                //console.log("originalFieldSelections");
+                //console.log(originalFieldSelections);
             } else {
-                console.log("isshow");
                 cardSetupModal.toggle(isShow);
-
             }
         }
+
         function onClickCancelCardSetup() {
-            getViewSetup(() => {
-                    toggleCardSetupModal(false);
-            });
+          //console.log("onlclickoriginalFieldSelections");
+          //  console.log(originalFieldSelections);
+          //  fieldSelections = originalFieldSelections;
+          //  formatNameObj = JSON.parse(JSON.stringify(originalFormatNameObj));
+          //  saveCardSetup(fieldSelections, () => {
+          //      toggleCardSetupModal();
+          //      renderKanbanBoard(kanbanColumns, true); 
+          //      getViewSetup(() => {
+          //          toggleCardSetupModal(false);
+          //  });
+          
+          
+
         }
         
         function onClickApplyCardSetup() {
@@ -1247,7 +1258,6 @@
                 toggleCardSetupModal();
                 renderKanbanBoard(kanbanColumns, true);
             });
-            console.log("saveCardSetup");
         }
 
         function applyFormatName() {
@@ -1892,7 +1902,7 @@
                                 <div id="fieldSelection" class="inner__field-selection"></div>
 
                                 <div class="inner__footer">
-                                    <button class="footer__btn-cancel" onclick="toggleCardSetupModal()">Cancel</button>
+                                    <button class="footer__btn-cancel" onclick="onClickCancelCardSetup()">Cancel</button>
                                     <button class="footer__btn-apply" onclick="onClickApplyCardSetup()">Apply</button>
                                 </div>
                             </div>
